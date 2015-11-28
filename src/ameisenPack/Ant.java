@@ -3,6 +3,7 @@ package ameisenPack;
 import java.util.Random;
 
 public class Ant {
+	private int name;	//shall later be used to refer to ant; needed for graphics purposes
 	private boolean fTile;
 	private boolean hTile;
 	private boolean food;
@@ -13,40 +14,45 @@ public class Ant {
 		switch(dir()){
 			case 1: y++; break;
 			case 2: x++; break;
-			case 4: y--; break;
-			case 5: x--; break;
+			case 3: y--; break;
+			case 4: x--; break;
 			default: break;
 		}
 	}
 	private int dir() { // move the ant
 		tCheck();	// refresh the Tile under the ant
+		int resDir = 5;	//resulting direction
+
 		if (!food){ // if ant has no food
 			if (fTile){	//if ant is on food tile
 				Master.fieldArray[x][y].decrStacks(2);
-				food = true;
-			} else {	// go to food-Tile if adjacent
+				food = true;														//does ant move after having taken food?
+			} else {	//if not on food tile, go to food-Tile if adjacent
 				int myfDir = sDir(2);
 				if (myfDir != 5){
-					return myfDir;
-				} else {	//go to pheromone-Tile if adjacent
+					resDir = myfDir;
+				} else {	//if no adj. food tile, go to pheromone-Tile if adjacent
 					int mypDir = sDir(1);
 					if (mypDir != 5){
-						return mypDir;
-					} else {
-						return rDir();
+						resDir = mypDir;
+					} else {	//if no clue, go in random direction
+						resDir = rDir();
 					}
 				}
 			}
-		} else {	// go to hive 	
-			if(hTile){
+		} else {	// if ant has food, go to hive
+			if(hTile){	//if on hive
 				Master.fieldArray[x][y].incrStacks(2);
 				food = false;
-				//does the ant move?
+																					//does the ant move after dropping food, or vice versa?
 			} else {
+
 				//how does the ant move if it has food and wants to the hive? TODO
 				//add p-Stack-Addition
 			}
 		}
+
+		return resDir;
 	}
 	private void tCheck(){
 		hTile = Master.fieldArray[x][y].isHive();
