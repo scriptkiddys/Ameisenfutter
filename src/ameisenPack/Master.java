@@ -5,12 +5,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Master {
-	public static final int F_STACK_NUMB	= 50; 	// Stacks per fTile
-	public static final int F_TILE_NUMB		= 5; 	// Number of fTiles
-	public static final int TURN_NUMB		= 100; 	// Number of turns
-	public static final int ANT_NUMB		= 5;
+	public static final int F_STACK_NUMB	= 50; 	// Stacks per fTile	//50
+	public static final int F_TILE_NUMB		= 5; 	// Number of fTiles	//5
+	public static final int TURN_NUMB		= 100; 	// Number of turns	//infinite
+	public static final int ANT_NUMB		= 5;						//
 	public static final int FIELD_DIM_X		= 10;
 	public static final int FIELD_DIM_Y		= 10;
+	public static final int P_DECAY_TIME	= 5;
 
 	public static Map myMap;
 
@@ -24,10 +25,10 @@ public class Master {
 	
 	public static void main (String[] args){
 		init();
-		for(int i = 0; i < TURN_NUMB; i++){
+		while (fieldArray[hiveX][hiveY].getStacks(1)<(F_STACK_NUMB*F_TILE_NUMB)){
 			turn();
 			try {
-				Thread.sleep(1000);                 //1000 milliseconds is one second.
+				Thread.sleep(2000);                 //1000 milliseconds is one second.
 			} catch(InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
@@ -38,6 +39,11 @@ public class Master {
 		myMap.repaint();
 		for(Ant elem : antArray){
 			elem.move();
+		}
+		for (int i = 0; i < fieldArray.length; i++) {
+			for (int j = 0; j < fieldArray[0].length; j++) {
+				fieldArray[i][j].decay();
+			}
 		}
 	}
 

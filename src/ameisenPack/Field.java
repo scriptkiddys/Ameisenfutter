@@ -1,11 +1,25 @@
 package ameisenPack;
 
+import java.util.ArrayList;
+
 public class Field {
 	private int pStacks;
 	private int fStacks;
 	private boolean hive;
 	private int antCount;
+	private int decayRate;
+	private ArrayList<Integer> pStackList = new ArrayList<>();
 
+	public Field(int StartDecayRate){
+		decayRate = StartDecayRate;
+	}
+	
+	public void decay(){
+		for (int i = 0; i < pStackList.size(); i++) {
+			pStackList.set(i, (pStackList.get(i)-1));
+
+		}
+	}
 
 	public int 	getStacks	(int stackNumb) {
 		switch (stackNumb){
@@ -25,7 +39,7 @@ public class Field {
 	}
 	public void incrStacks	(int stackNumb) {
 		switch (stackNumb){
-			case 1: this.pStacks++; break;
+			case 1: pStackList.add(decayRate); break;
 			case 2: this.fStacks++; break;
 			case 3: this.antCount++; break;
 			default: break;

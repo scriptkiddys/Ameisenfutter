@@ -51,7 +51,7 @@ public class Map extends JPanel {
 
                 g.drawString(""+curField.getStacks(2), (x + rectWidth) - rectWidth/4, y + (rectHeight) - (rectHeight/8));     //fStacks
                 g.drawString(""+curField.getStacks(3),  x + rectWidth / 4, y + rectHeight - (rectHeight / 8));              //ants ll
-               // g.drawString(""+curField.getStacks(1), (x + rectWidth) - rectWidth/4, y + rectHeight - (rectHeight/8));     //pStacks
+                g.drawString(""+curField.getStacks(1), (x + rectWidth) - rectWidth/4, y + rectHeight - (rectHeight/2));     //pStacks
 
             }
         }
